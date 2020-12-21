@@ -1,15 +1,20 @@
 package com.suleiman.springprojectmvc.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.lang.NonNull;
+
 public class Student {
 
-    private Long id;
+    private Long id = 0L;
     private String firstName;
     private String lastName;
     private String grades;
-    private static Long unique;
+    private static Long unique = 0L;
 
-    public Student(String firstName, String lastName, String grades) {
-        this.id = (unique == 0) ? unique : unique + 1;
+    public Student(@JsonProperty("firstName") String firstName,
+                   @JsonProperty("lastName") String lastName,
+                   @JsonProperty("grades") String grades) {
+        this.id = unique++;
         this.firstName = firstName;
         this.lastName = lastName;
         this.grades = grades;

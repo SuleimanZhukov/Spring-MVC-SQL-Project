@@ -3,8 +3,9 @@ package com.suleiman.springprojectmvc.api;
 import com.suleiman.springprojectmvc.model.Student;
 import com.suleiman.springprojectmvc.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,24 +21,29 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    public void addStudent(Student student) {
+    @PostMapping
+    public void addStudent(@RequestBody Student student) {
         studentService.insertStudent(student);
     }
 
+    @GetMapping
     public List<Student> getAllStudents() {
         return studentService.selectAllStudents();
     }
 
-    public Optional<Student> selectStudentById(Long id) {
+    @GetMapping(path = "{id}")
+    public Optional<Student> selectStudentById(@PathVariable("id") Long id) {
         return studentService.selectStudentById(id);
     }
 
-    public int updateStudentById(Long id, Student updateStudent) {
+    @PutMapping(path = "{id}")
+    public int updateStudentById(@PathVariable("id") Long id, @RequestBody Student updateStudent) {
         studentService.updateStudentById(id, updateStudent);
         return 1;
     }
 
-    public int deleteStudentById(Long id) {
+    @DeleteMapping(path = "{id}")
+    public int deleteStudentById(@PathVariable("id") Long id) {
         studentService.deleteStudentById(id);
         return 1;
     }
