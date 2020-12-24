@@ -1,23 +1,30 @@
 package com.suleiman.springprojectmvc.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.lang.NonNull;
 
+@Entity
 public class Student {
-
-    private Long id = 0L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String firstName;
     private String lastName;
     private String grades;
-    private static Long unique = 0L;
 
     public Student(@JsonProperty("firstName") String firstName,
                    @JsonProperty("lastName") String lastName,
                    @JsonProperty("grades") String grades) {
-        this.id = unique++;
         this.firstName = firstName;
         this.lastName = lastName;
         this.grades = grades;
+    }
+
+    public Student() {
     }
 
     public Long getId() {
