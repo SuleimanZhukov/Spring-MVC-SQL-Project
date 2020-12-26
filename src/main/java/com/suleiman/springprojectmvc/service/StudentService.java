@@ -6,16 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class StudentService {
 
     private StudentDao studentDao;
 
     @Autowired
-    public StudentService(@Qualifier("fake") StudentDao studentDao) {
+    public StudentService(@Qualifier("mysql") StudentDao studentDao) {
         this.studentDao = studentDao;
     }
 
@@ -23,12 +20,12 @@ public class StudentService {
         studentDao.insertStudent(student);
     }
 
-    public Optional<Student> selectStudentById(Long id) {
+    public Student selectStudentById(Long id) {
         return studentDao.selectStudentById(id);
     }
 
-    public List<Student> selectAllStudents() {
-        return studentDao.selectAllStudents();
+    public void selectAllStudents() {
+        studentDao.selectAllStudents();
     }
 
     public void updateStudentById(Long id, Student updateStudent) {

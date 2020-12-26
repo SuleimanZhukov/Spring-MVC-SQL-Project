@@ -3,12 +3,7 @@ package com.suleiman.springprojectmvc.api;
 import com.suleiman.springprojectmvc.model.Student;
 import com.suleiman.springprojectmvc.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/student")
 @RestController
@@ -27,12 +22,12 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getAllStudents() {
-        return studentService.selectAllStudents();
+    public void getAllStudents() {
+        studentService.selectAllStudents();
     }
 
     @GetMapping(path = "{id}")
-    public Optional<Student> selectStudentById(@PathVariable("id") Long id) {
+    public Student selectStudentById(@PathVariable("id") Long id) {
         return studentService.selectStudentById(id);
     }
 
