@@ -36,20 +36,6 @@ public class StudentDB implements StudentDao {
             String grades = resultSet.getString("grades");
             return new Student(id, firstname, lastname, grades);
         });
-//        ResultSetExtractor<Student> extractor = new ResultSetExtractor<Student>() {
-//            @Override
-//            public Student extractData(ResultSet resultSet) throws SQLException, DataAccessException {
-//                if (resultSet.next()) {
-//                    String firstName = resultSet.getString(1);
-//                    String lastName = resultSet.getString(2);
-//                    String grades = resultSet.getString(3);
-//
-//                    return new Student(firstName, lastName, grades);
-//                }
-//                return null;
-//            }
-//        };
-//        return jdbcTemplate.queryFor(sql, extractor);
     }
 
     @Override
