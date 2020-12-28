@@ -29,22 +29,27 @@ public class StudentDB implements StudentDao {
 
     @Override
     public Student selectStudentById(Long id) {
-        String sql = "SELECT id, firstname, lastname, grades FROM Students WHERE id = " + id;
-
-        ResultSetExtractor<Student> extractor = new ResultSetExtractor<Student>() {
-            @Override
-            public Student extractData(ResultSet resultSet) throws SQLException, DataAccessException {
-                if (resultSet.next()) {
-                    String firstName = resultSet.getString(1);
-                    String lastName = resultSet.getString(2);
-                    String grades = resultSet.getString(3);
-
-                    return new Student(firstName, lastName, grades);
-                }
-                return null;
-            }
-        };
-        return jdbcTemplate.query(sql, extractor);
+        final String sql = "SELECT id, firstname, lastname, grades FROM Students WHERE id = " + id;
+        return jdbcTemplate.queryForObject(sql, (resultSet, i) -> {
+            String firstname = resultSet.getString("firstname");
+            String lastname = resultSet.getString("lastname");
+            String grades = resultSet.getString("grades");
+            return new Student(id, firstname, lastname, grades);
+        });
+//        ResultSetExtractor<Student> extractor = new ResultSetExtractor<Student>() {
+//            @Override
+//            public Student extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+//                if (resultSet.next()) {
+//                    String firstName = resultSet.getString(1);
+//                    String lastName = resultSet.getString(2);
+//                    String grades = resultSet.getString(3);
+//
+//                    return new Student(firstName, lastName, grades);
+//                }
+//                return null;
+//            }
+//        };
+//        return jdbcTemplate.queryFor(sql, extractor);
     }
 
     @Override
