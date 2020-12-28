@@ -24,6 +24,16 @@ public class Student {
         this.grades = grades;
     }
 
+    public Student(@JsonProperty("firstName") Long id,
+                   @JsonProperty("firstName") String firstName,
+                   @JsonProperty("lastName") String lastName,
+                   @JsonProperty("grades") String grades) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.grades = grades;
+    }
+
     public Student() {
     }
 

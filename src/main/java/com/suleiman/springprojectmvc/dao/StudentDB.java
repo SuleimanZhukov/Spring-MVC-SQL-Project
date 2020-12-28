@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-@Repository("mysql")
+@Repository("postgres")
 public class StudentDB implements StudentDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -29,7 +29,7 @@ public class StudentDB implements StudentDao {
 
     @Override
     public Student selectStudentById(Long id) {
-        String sql = "SELECT * FROM Students WHERE id = " + id;
+        String sql = "SELECT id, firstname, lastname, grades FROM Students WHERE id = " + id;
 
         ResultSetExtractor<Student> extractor = new ResultSetExtractor<Student>() {
             @Override
@@ -49,18 +49,14 @@ public class StudentDB implements StudentDao {
 
     @Override
     public List<Student> selectAllStudents() {
-        String sql = "SELECT * FROM Students";
-
-        RowMapper<Student> rowMapper = new RowMapper<Student>() {
-            @Override
-            public Student mapRow(ResultSet resultSet, int i) throws SQLException {
-                String firstName = resultSet.getString(1);
-                String lastName = resultSet.getString(2);
-                String grades = resultSet.getString(3);
-                return new Student(firstName, lastName, grades);
-            }
-        };
-        return jdbcTemplate.query(sql, rowMapper);
+        final String sql = "SELECT id, firstname, lastname, grades FROM student";
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            Long id = resultSet.getLong("id");
+            String firstname = resultSet.getString("firstname");
+            String lastname = resultSet.getString("lastname");
+            String grades = resultSet.getString("grades");
+            return new Student(id, firstname, lastname, grades);
+        });
     }
 
     @Override
